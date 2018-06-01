@@ -1,0 +1,39 @@
+Software a usar
+
+openoffice
+umbrello
+android-studio
+eclipse
+gimp
+inkscape
+bluefish
+winefish latex editor
+git
+
+Casos de uso
+
+configuracion
+añadir control previo
+añadir control posterior
+calcular dosis
+
+
+
+
+
+Clases
+
+Lectura {fecha, hora, tipoComida, valor
+Calculadora
+
+
+Metodos
+
+Para manejo de datos:
+
+añadir lectura previa {fecha, hora, tipoComida, valor, insulina, hdrtos
+añadir lectura posterior {fecha, hora, valor
+leer lecturas {fecha
+
+
+
