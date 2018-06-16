@@ -11,17 +11,40 @@ public class Diabetes {
 	double ratioInsulinaPorHidratos = 0;
 	
 	
+	
 	public double CalcularDosis(double insulinaAyer, double hidratosAyer, double glucosaPreviaAyer, double glucosaPosteriorAyer, double totalInsulinaAyer, double glucosaActual, double hidratosActual){
-		
+	
 		//Formulas basicas
 		ratioInsulina = 1800 / totalInsulinaAyer;
 		ratioInsulinaPorHidratos = insulinaAyer / hidratosAyer;
+		double diferenciaHidratos = hidratosActual - hidratosAyer;
+		double accion = CalcularAccion(insulinaAyer, glucosaPreviaAyer, glucosaPosteriorAyer, totalInsulinaAyer, glucosaActual); 
 		
+		//según la accion calculamos el incremento o decremento de dosis
+		
+		
+		if (diferenciaHidratos >0){
+			//Hay que aumentar la dosis
+			accion++;
+		}
+		else if (diferenciaHidratos <1){
+			//Hay que disminuir la dosis
+			accion--;
+		}
+		
+		
+		return accion/0.5;
+	}
+	
+	
+	public double CalcularAccion(double insulinaAyer, double glucosaPreviaAyer, double glucosaPosteriorAyer, double totalInsulinaAyer, double glucosaActual){
+		
+
 		int accion = 0;
 				
-		//posibles 27 casos
+		//posibles 27 casos, reducidos a 20: los casos 0 no hace falta explicitar.
 		
-		//Primeros 8 casos cuando la glucosa previa de ayer era alta
+		//Primeros 7 casos cuando la glucosa previa de ayer era alta
 		if(glucosaPreviaAyer > 140)
 		{
 			//Si la glucosa posterior tambien fue alta
@@ -30,59 +53,75 @@ public class Diabetes {
 				//Si la glucosa actual es alta
 				if(glucosaActual>140){accion=1;}
 				//Si la glucosa actual es baja
-				else if(glucosaActual<80){accion=(-1);}
+				else if(glucosaActual<100){accion=(-1);}
 			}
 			//Si la glucosa posterior fue correcta
-			else if(glucosaPosteriorAyer<180 && glucosaPosteriorAyer>80)
+			else if(glucosaPosteriorAyer<180 && glucosaPosteriorAyer>100)
 				{
-					//Si la glucosa actual no es alta
-					if(glucosaActual<180){accion=(-1);}
+					//Si la glucosa actual es correcta
+					if(glucosaActual > 80 && glucosaActual<140){accion=(-1);}
+					else if (glucosaActual<80){accion=(-2);}
 				}
 			//Si la glucosa posterior fue baja
-			else if(glucosaPosteriorAyer<80)
+			else if(glucosaPosteriorAyer<100)
 			{
-				//da igual como este la actual... hay que disminuir la dosis
-				
+				//Si la glucosa actual es alta
+				if(glucosaActual >140){accion=(-1);}
+				//Si la glucosa actual es correcta
+				if(glucosaActual >80 && glucosaActual<140){accion=(-2);
+				//si la glucosa actual es baja
+				if(glucosaActual <80){accion=(-3);}
+				}
 			}
 		}
-		//7 casos cuando la glucosa previa de ayer era correcta
+		//6 casos cuando la glucosa previa de ayer era correcta
 		else if (glucosaPreviaAyer <140 && glucosaPreviaAyer>80)
 			{
 			//si la glucosa posterior fue alta
 			if(glucosaPosteriorAyer >180)
 				{
-				//si la glucosa actual no es baja
-				if(glucosaActual>80){accion=1;}
+				//si la glucosa actual es alta
+				if(glucosaActual>140){accion=2;}
+				//si la glucosaActual es correcta
+				else if(glucosaActual>80 && glucosaActual<140){accion=1;}
 				}
 			//si la glucosa posterior fue correcta
-			else if(glucosaPosteriorAyer<140 && glucosaPosteriorAyer>80)
+			else if(glucosaPosteriorAyer<180 && glucosaPosteriorAyer>100)
 			{
 				//Si la glucosa actual es alta
-				if(glucosaActual>140){accion=1;}
+				if(glucosaActual>180){accion=1;}
 				//Si la glucosa actual es baja
 				else if(glucosaActual<80){accion=(-1);}
 			}
 			//si la glucosa posterior fue baja
-			else if (glucosaPosteriorAyer<80)
+			else if (glucosaPosteriorAyer<100)
 			{
-				//Si la glucosa actual no es alta
-				if(glucosaActual<180){accion=(-1);}
+				//si la glucosa actual es correcta
+				if(glucosaActual<140 &&glucosaActual>80){accion=(-1);}
+				//Si la glucosa actual es baja
+				if(glucosaActual<80){accion=(-2);}
 			}	
 		}
-		//ultimos 6 casos cuando la glucosa previa de ayer era baja
+		//ultimos 7 casos cuando la glucosa previa de ayer era baja
 		else if(glucosaPreviaAyer<80)
 			{
 			//Cuando la glucosa posterior ayer era alta
 				if(glucosaPosteriorAyer>180)
 				{
-					//en cualquier caso aumentamos la dosis
-					accion=1;
+					//si la glucosa actual es alta +3
+					if(glucosaActual>140){accion=3;}
+					//si la glucosa actual es correcta +2
+					else if(glucosaActual>80 && glucosaActual<140){accion=2;}
+					//si la glucosa actual es baja +1
+					else if(glucosaActual<80){accion=1;}
 				}
 			//Cuando la glucosa posterior de ayer era correcta
 				else if (glucosaPosteriorAyer<180 && glucosaPosteriorAyer>80)
 				{
-					//si la glucosa actual es mayor de 80 hay que aumentar la dosis
-					if(glucosaActual>80){accion=1;}
+					//si la glucosa actual es alta +2
+					if(glucosaActual>140){accion=2;}
+					//si la glucosa actual es correcta +1
+					else if(glucosaActual>80 && glucosaActual<140){accion=1;}
 				}
 			//Cuando la glucosa posterior de ayer era baja
 				else if (glucosaPosteriorAyer<80)
