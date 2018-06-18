@@ -78,7 +78,7 @@ public class DiabetesTest {
 		
 		
 		//TERCEROS CASOS GL PREV AYER BAJA
-		//System.out.println(d.CalcularAccion(3, 79, 181, 20, 142));
+		System.out.println(d.CalcularAccion(3, 79, 99, 20, 79));
 		
 		//caso1: InsulinaAyer = 3, GlPrev Baja, GlPost Alta, GlAct Alta
 		assertTrue(4.5 == d.CalcularAccion(3, 79, 181, 20, 142));

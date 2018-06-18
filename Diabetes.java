@@ -114,7 +114,7 @@ public class Diabetes {
 					else if(glucosaActual<80){accion=1;}
 				}
 			//Cuando la glucosa posterior de ayer era correcta
-				else if (glucosaPosteriorAyer<180 && glucosaPosteriorAyer>80)
+				else if (glucosaPosteriorAyer<180 && glucosaPosteriorAyer>100)
 				{
 					//si la glucosa actual es alta +2
 					if(glucosaActual>140){accion=2;}
@@ -122,7 +122,7 @@ public class Diabetes {
 					else if(glucosaActual>80 && glucosaActual<140){accion=1;}
 				}
 			//Cuando la glucosa posterior de ayer era baja
-				else if (glucosaPosteriorAyer<80)
+				else if (glucosaPosteriorAyer<100)
 				{
 					//Si la glucosa actual es alta
 					if(glucosaActual>140){accion=1;}
