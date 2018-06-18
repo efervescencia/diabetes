@@ -16,24 +16,23 @@ public class Diabetes {
 	
 		//Formulas basicas
 		ratioInsulina = 1800 / totalInsulinaAyer;
-		ratioInsulinaPorHidratos = insulinaAyer / hidratosAyer;
+		//ratio en medias dosis
+		ratioInsulinaPorHidratos = (insulinaAyer / hidratosAyer);
 		double diferenciaHidratos = hidratosActual - hidratosAyer;
-		double accion = CalcularAccion(insulinaAyer, glucosaPreviaAyer, glucosaPosteriorAyer, totalInsulinaAyer, glucosaActual); 
+		double insulina = CalcularAccion(insulinaAyer, glucosaPreviaAyer, glucosaPosteriorAyer, totalInsulinaAyer, glucosaActual); 
 		
 		//según la accion calculamos el incremento o decremento de dosis
 		
-		
 		if (diferenciaHidratos >0){
 			//Hay que aumentar la dosis
-			accion++;
+			insulina+=(ratioInsulinaPorHidratos*diferenciaHidratos);
 		}
-		else if (diferenciaHidratos <1){
+		else if (diferenciaHidratos <0){
 			//Hay que disminuir la dosis
-			accion--;
+			insulina+=(ratioInsulinaPorHidratos*diferenciaHidratos);
 		}
 		
-		
-		return accion/0.5;
+		return insulina;
 	}
 	
 	
@@ -68,10 +67,9 @@ public class Diabetes {
 				//Si la glucosa actual es alta
 				if(glucosaActual >140){accion=(-1);}
 				//Si la glucosa actual es correcta
-				if(glucosaActual >80 && glucosaActual<140){accion=(-2);
+				else if(glucosaActual >80 && glucosaActual<140){accion=(-2);}
 				//si la glucosa actual es baja
-				if(glucosaActual <80){accion=(-3);}
-				}
+				else if(glucosaActual <80){accion=(-3);}
 			}
 		}
 		//6 casos cuando la glucosa previa de ayer era correcta
@@ -89,7 +87,7 @@ public class Diabetes {
 			else if(glucosaPosteriorAyer<180 && glucosaPosteriorAyer>100)
 			{
 				//Si la glucosa actual es alta
-				if(glucosaActual>180){accion=1;}
+				if(glucosaActual>140){accion=1;}
 				//Si la glucosa actual es baja
 				else if(glucosaActual<80){accion=(-1);}
 			}
@@ -134,7 +132,7 @@ public class Diabetes {
 			
 			}
 		
-		return accion;
+		return insulinaAyer + (accion / 2.0);
 	}
 	
 
