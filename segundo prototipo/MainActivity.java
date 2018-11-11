@@ -37,7 +37,7 @@ public class MainActivity extends Activity implements OnItemClickListener{
 
         db=openOrCreateDatabase("glucosa.db", MODE_PRIVATE, null );
         db.execSQL("create table if not exists glucosas " +
-            "(_id integer primary key, ingesta integer, "+
+            "(_id integer primary key, ingesta string, "+
                 "glucosa_previa integer, glucosa_posterior integer, insulina integer, hidratos integer);");
 
         //llena la tabla de operas
@@ -53,6 +53,7 @@ public class MainActivity extends Activity implements OnItemClickListener{
         String[] from={"ingesta","glucosa_previa"};
         int[] to={R.id.textView, R.id.textView2};
         SimpleCursorAdapter adapter= new SimpleCursorAdapter(this, R.layout.list, cursor, from,to);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(this);
         db.close();
@@ -60,17 +61,19 @@ public class MainActivity extends Activity implements OnItemClickListener{
 
         calendarNow = Calendar.getInstance();
         actualizarFecha();
+
+
     }
 
     void llenaTabla(){
-        insertaFila(1,133,156,3,3);
-        insertaFila(3,111,111,2,6);
-        insertaFila(4,98,148,3,2);
-        insertaFila(5,127,221,3,5);
+        insertaFila("desayuno",133,156,3,3);
+        insertaFila("comida",111,111,2,6);
+        insertaFila("merienda",98,148,3,2);
+        insertaFila("cena",127,221,3,5);
 
     }
 
-    void insertaFila(int ingesta, int glucosa_previa, int glucosa_posterior, int insulina, int hidratos){
+    void insertaFila(String ingesta, int glucosa_previa, int glucosa_posterior, int insulina, int hidratos){
 
         ContentValues values= new ContentValues();
         values.put("ingesta", ingesta);
@@ -120,7 +123,7 @@ public void nuevaLectura(View v){
 
         Cursor cursor = (Cursor) parent.getItemAtPosition(position);
         int _id=cursor.getInt(0);
-        int ingesta=cursor.getInt(1);
+        String ingesta=cursor.getString(1);
         int glucosa_previa=cursor.getInt(2);
         int glucosa_posterior=cursor.getInt(3);
         int insulina=cursor.getInt(4);
