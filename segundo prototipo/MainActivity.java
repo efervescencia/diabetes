@@ -35,22 +35,22 @@ public class MainActivity extends Activity implements OnItemClickListener{
         tv1=(TextView) findViewById(R.id.textView);
         tv2=(TextView) findViewById(R.id.textView2);
 
-        db=openOrCreateDatabase("musica.db", MODE_PRIVATE, null );
-        db.execSQL("create table if not exists operas1 " +
-            "(_id integer primary key, titulo text, "+
-                "compositor text, year integer);");
+        db=openOrCreateDatabase("glucosa.db", MODE_PRIVATE, null );
+        db.execSQL("create table if not exists glucosas " +
+            "(_id integer primary key, ingesta integer, "+
+                "glucosa_previa integer, glucosa_posterior integer, insulina integer, hidratos integer);");
 
         //llena la tabla de operas
         //llenaTabla();
 
         //-----Realiza una busqueda
-        String[] columns={"_id","titulo","compositor","year"};
+        String[] columns={"_id","ingesta","glucosa_previa","glucosa_posterior", "insulina", "hidratos"};
 
-        Cursor cursor=db.query("operas1", columns,null,null,null,null,null);
+        Cursor cursor=db.query("glucosas", columns,null,null,null,null,null);
 
         //---Adapta el cursor al listview
         ListView lv =(ListView) findViewById(R.id.listView);
-        String[] from={"titulo","compositor"};
+        String[] from={"ingesta","glucosa_previa"};
         int[] to={R.id.textView, R.id.textView2};
         SimpleCursorAdapter adapter= new SimpleCursorAdapter(this, R.layout.list, cursor, from,to);
         lv.setAdapter(adapter);
@@ -63,19 +63,24 @@ public class MainActivity extends Activity implements OnItemClickListener{
     }
 
     void llenaTabla(){
-        insertaFila("Don Giovanni","W.A.Mozart", 1787);
-        insertaFila("Giulio Cesare", "G.F. Haendel", 1724);
-        insertaFila("Orlando Furioso","A. Vivaldi", 1727);
+        insertaFila(1,133,156,3,3);
+        insertaFila(3,111,111,2,6);
+        insertaFila(4,98,148,3,2);
+        insertaFila(5,127,221,3,5);
+
     }
 
-    void insertaFila(String titulo, String compositor, int year){
+    void insertaFila(int ingesta, int glucosa_previa, int glucosa_posterior, int insulina, int hidratos){
 
         ContentValues values= new ContentValues();
-        values.put("titulo", titulo);
-        values.put("compositor", compositor);
-        values.put("year", year);
-        db.insert("operas1", null, values);
+        values.put("ingesta", ingesta);
+        values.put("glucosa_previa", glucosa_previa);
+        values.put("glucosa_posterior", glucosa_posterior);
+        values.put("insulina", insulina);
+        values.put("hidratos", hidratos);
+        db.insert("glucosas", null, values);
     }
+
 
     public void actualizarFecha(){
         TextView viewFecha = (TextView) findViewById(R.id.fecha);
@@ -115,19 +120,26 @@ public void nuevaLectura(View v){
 
         Cursor cursor = (Cursor) parent.getItemAtPosition(position);
         int _id=cursor.getInt(0);
-        String titulo=cursor.getString(1);
-        String compositor=cursor.getString(2);
-        int year=cursor.getInt(3);
+        int ingesta=cursor.getInt(1);
+        int glucosa_previa=cursor.getInt(2);
+        int glucosa_posterior=cursor.getInt(3);
+        int insulina=cursor.getInt(4);
+        int hidratos=cursor.getInt(5);
 
         Context context = getApplicationContext();
-        CharSequence text = "Hello toast! "+_id+ " "+compositor+" "+year;
+        CharSequence text = "Hello toast! "+_id+ " "+ingesta+" "+glucosa_previa;
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
 
         Intent intent = new Intent(this, nueva_lectura.class);
-        intent.putExtra(EXTRA_MESSAGE, text);
+        intent.putExtra("_id", _id);
+        intent.putExtra("ingesta", ingesta);
+        intent.putExtra("glucosa_previa",glucosa_previa);
+        intent.putExtra("glucosa_posterior", glucosa_posterior);
+        intent.putExtra("insulina", insulina);
+        intent.putExtra("hidratos",hidratos);
         startActivity(intent);
 
     }
