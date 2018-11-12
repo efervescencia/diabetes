@@ -5,15 +5,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 public class nueva_lectura extends AppCompatActivity {
 
     int _id, glucosa_previa, glucosa_posterior, insulina, hidratos;
-    String ingesta;
+    String ingesta, fecha, hora;
     SQLiteDatabase db;
 
 
@@ -22,6 +20,8 @@ public class nueva_lectura extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nueva_lectura);
         _id= getIntent().getExtras().getInt("_id");
+        fecha = getIntent().getExtras().getString("fecha");
+        hora = getIntent().getExtras().getString("hora");
         ingesta =getIntent().getExtras().getString("ingesta");
         glucosa_previa=getIntent().getExtras().getInt("glucosa_previa");
         glucosa_posterior=getIntent().getExtras().getInt("glucosa_posterior");
@@ -34,11 +34,20 @@ public class nueva_lectura extends AppCompatActivity {
         sp.setAdapter(adapter1);
         sp.setSelection(ingesta, true);
         */
-        TextView tv= (TextView) findViewById(R.id.textView3);
+        EditText cuadroFecha = findViewById(R.id.editTextFecha);
+        cuadroFecha.setText(fecha);
+        EditText cuadroHora = findViewById(R.id.editTextHora);
+        cuadroHora.setText(hora);
+        TextView tv= (TextView) findViewById(R.id.textViewIngesta);
         tv.setText(ingesta);
-        String datos= "ID: "+_id+" Gl previa: "+glucosa_previa;
-        EditText casilla = findViewById(R.id.editText7);
-        casilla.setText(datos);
+        EditText cuadroGlucosaPrevia = findViewById(R.id.editTextGlucosaPrevia);
+        cuadroGlucosaPrevia.setText(""+glucosa_previa);
+        EditText cuadroGlucosaPosterior = (EditText) findViewById(R.id.editTextGlucosaPosterior);
+        cuadroGlucosaPosterior.setText(""+glucosa_posterior);
+        EditText cuadroHidratos = findViewById(R.id.editTextHidratos);
+        cuadroHidratos.setText(""+hidratos);
+        EditText cuadroInsulina = findViewById(R.id.editTextInsulina);
+        cuadroInsulina.setText(""+insulina);
     }
 
 

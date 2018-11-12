@@ -23,37 +23,30 @@ public class MainActivity extends Activity implements OnItemClickListener{
     Calendar calendarNow = null;
     String fecha = "";
     SQLiteDatabase db;
-    TextView tv1, tv2;
-    public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tv1=(TextView) findViewById(R.id.textView);
-        tv2=(TextView) findViewById(R.id.textView2);
-
         db=openOrCreateDatabase("glucosa.db", MODE_PRIVATE, null );
-        db.execSQL("create table if not exists glucosas " +
-            "(_id integer primary key, ingesta string, "+
+        db.execSQL("create table if not exists glucosas2 " +
+            "(_id integer primary key, fecha string, hora string, ingesta string, "+
                 "glucosa_previa integer, glucosa_posterior integer, insulina integer, hidratos integer);");
 
         //llena la tabla de operas
-        //llenaTabla();
+        llenaTabla();
 
         //-----Realiza una busqueda
-        String[] columns={"_id","ingesta","glucosa_previa","glucosa_posterior", "insulina", "hidratos"};
+        String[] columns={"_id","fecha", "hora", "ingesta","glucosa_previa","glucosa_posterior", "insulina", "hidratos"};
 
-        Cursor cursor=db.query("glucosas", columns,null,null,null,null,null);
+        Cursor cursor=db.query("glucosas2", columns,null,null,null,null,null);
 
         //---Adapta el cursor al listview
         ListView lv =(ListView) findViewById(R.id.listView);
-        String[] from={"ingesta","glucosa_previa"};
-        int[] to={R.id.textView, R.id.textView2};
+        String[] from={"hora","ingesta","glucosa_previa","glucosa_posterior"};
+        int[] to={R.id.listadoHora, R.id.listadoIngesta, R.id.listadoGlucosaPrevia, R.id.listadoGlucosaPosterior};
         SimpleCursorAdapter adapter= new SimpleCursorAdapter(this, R.layout.list, cursor, from,to);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(this);
         db.close();
@@ -66,22 +59,26 @@ public class MainActivity extends Activity implements OnItemClickListener{
     }
 
     void llenaTabla(){
-        insertaFila("desayuno",133,156,3,3);
-        insertaFila("comida",111,111,2,6);
-        insertaFila("merienda",98,148,3,2);
-        insertaFila("cena",127,221,3,5);
+        insertaFila("10-10-2018","10:10","Desayuno",120,178, 3, 3);
+        insertaFila("10-10-2018","10:10","Almuerzo",120,178, 3, 3);
+        insertaFila("10-10-2018","10:10","Comida",120,178, 3, 3);
+        insertaFila("10-10-2018","10:10","Merienda",120,178, 3, 3);
+        insertaFila("10-10-2018","10:10","Cena",120,178, 3, 3);
+
 
     }
 
-    void insertaFila(String ingesta, int glucosa_previa, int glucosa_posterior, int insulina, int hidratos){
+    void insertaFila(String fecha, String hora, String ingesta, int glucosa_previa, int glucosa_posterior, int insulina, int hidratos){
 
         ContentValues values= new ContentValues();
+        values.put("fecha", fecha);
+        values.put("hora", hora);
         values.put("ingesta", ingesta);
         values.put("glucosa_previa", glucosa_previa);
         values.put("glucosa_posterior", glucosa_posterior);
         values.put("insulina", insulina);
         values.put("hidratos", hidratos);
-        db.insert("glucosas", null, values);
+        db.insert("glucosas2", null, values);
     }
 
 
@@ -120,14 +117,15 @@ public void nuevaLectura(View v){
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
         Cursor cursor = (Cursor) parent.getItemAtPosition(position);
         int _id=cursor.getInt(0);
-        String ingesta=cursor.getString(1);
-        int glucosa_previa=cursor.getInt(2);
-        int glucosa_posterior=cursor.getInt(3);
-        int insulina=cursor.getInt(4);
-        int hidratos=cursor.getInt(5);
+        String fecha=cursor.getString(1);
+        String hora=cursor.getString(2);
+        String ingesta=cursor.getString(3);
+        int glucosa_previa=cursor.getInt(4);
+        int glucosa_posterior=cursor.getInt(5);
+        int insulina=cursor.getInt(6);
+        int hidratos=cursor.getInt(7);
 
         Context context = getApplicationContext();
         CharSequence text = "Hello toast! "+_id+ " "+ingesta+" "+glucosa_previa;
@@ -138,6 +136,8 @@ public void nuevaLectura(View v){
 
         Intent intent = new Intent(this, nueva_lectura.class);
         intent.putExtra("_id", _id);
+        intent.putExtra("fecha", fecha);
+        intent.putExtra("hora", hora);
         intent.putExtra("ingesta", ingesta);
         intent.putExtra("glucosa_previa",glucosa_previa);
         intent.putExtra("glucosa_posterior", glucosa_posterior);
