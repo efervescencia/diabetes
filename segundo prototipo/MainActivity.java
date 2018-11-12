@@ -35,7 +35,7 @@ public class MainActivity extends Activity implements OnItemClickListener{
                 "glucosa_previa integer, glucosa_posterior integer, insulina integer, hidratos integer);");
 
         //llena la tabla de operas
-        llenaTabla();
+        //llenaTabla();
 
         //-----Realiza una busqueda
         String[] columns={"_id","fecha", "hora", "ingesta","glucosa_previa","glucosa_posterior", "insulina", "hidratos"};
@@ -108,9 +108,10 @@ public class MainActivity extends Activity implements OnItemClickListener{
     }
 
 
-public void nuevaLectura(View v){
-    setContentView(R.layout.activity_nueva_lectura);
-
+public void agregar(View v){
+    Intent intent = new Intent(this, activity_agregar.class);
+    intent.putExtra("fecha", fecha);
+    startActivity(intent);
 }
 
 
@@ -127,12 +128,14 @@ public void nuevaLectura(View v){
         int insulina=cursor.getInt(6);
         int hidratos=cursor.getInt(7);
 
+        /*
         Context context = getApplicationContext();
         CharSequence text = "Hello toast! "+_id+ " "+ingesta+" "+glucosa_previa;
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+        */
 
         Intent intent = new Intent(this, nueva_lectura.class);
         intent.putExtra("_id", _id);

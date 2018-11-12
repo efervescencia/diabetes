@@ -58,7 +58,7 @@ public class nueva_lectura extends AppCompatActivity {
 
     public void borrar(View v){
         db=openOrCreateDatabase("glucosa.db", MODE_PRIVATE, null );
-        db.delete("glucosas","_id="+_id,null);
+        db.delete("glucosas2","_id="+_id,null);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
