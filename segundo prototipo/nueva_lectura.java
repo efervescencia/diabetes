@@ -34,19 +34,19 @@ public class nueva_lectura extends AppCompatActivity {
         sp.setAdapter(adapter1);
         sp.setSelection(ingesta, true);
         */
-        EditText cuadroFecha = findViewById(R.id.editTextFecha);
+        EditText cuadroFecha = findViewById(R.id.editTextAgregarFecha);
         cuadroFecha.setText(fecha);
-        EditText cuadroHora = findViewById(R.id.editTextHora);
+        EditText cuadroHora = findViewById(R.id.editTextAgregarHora);
         cuadroHora.setText(hora);
         TextView tv= (TextView) findViewById(R.id.textViewIngesta);
         tv.setText(ingesta);
-        EditText cuadroGlucosaPrevia = findViewById(R.id.editTextGlucosaPrevia);
+        EditText cuadroGlucosaPrevia = findViewById(R.id.editTextAgregarGlucosaPrevia);
         cuadroGlucosaPrevia.setText(""+glucosa_previa);
         EditText cuadroGlucosaPosterior = (EditText) findViewById(R.id.editTextGlucosaPosterior);
         cuadroGlucosaPosterior.setText(""+glucosa_posterior);
-        EditText cuadroHidratos = findViewById(R.id.editTextHidratos);
+        EditText cuadroHidratos = findViewById(R.id.editTextAgregarHidratos);
         cuadroHidratos.setText(""+hidratos);
-        EditText cuadroInsulina = findViewById(R.id.editTextInsulina);
+        EditText cuadroInsulina = findViewById(R.id.editTextAgregarInsulina);
         cuadroInsulina.setText(""+insulina);
     }
 
