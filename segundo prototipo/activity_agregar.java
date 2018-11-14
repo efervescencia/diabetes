@@ -5,13 +5,11 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class activity_agregar extends AppCompatActivity {
 
