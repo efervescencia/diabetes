@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ public class nueva_lectura extends AppCompatActivity {
     int _id, glucosa_previa, glucosa_posterior, insulina, hidratos;
     String ingesta, fecha, hora;
     SQLiteDatabase db;
+    private int tipos_comida;
 
 
     @Override
@@ -29,13 +31,8 @@ public class nueva_lectura extends AppCompatActivity {
         glucosa_posterior=getIntent().getExtras().getInt("glucosa_posterior");
         insulina=getIntent().getExtras().getInt("insulina");
         hidratos=getIntent().getExtras().getInt("hidratos");
-        /*
-        Spinner sp = findViewById(R.id.spinner2);
-        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this, R.array.tipos_comida, android.R.layout.simple_spinner_item);
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sp.setAdapter(adapter1);
-        sp.setSelection(ingesta, true);
-        */
+
+
         EditText cuadroFecha = findViewById(R.id.editTextActualizarFecha);
         cuadroFecha.setText(fecha);
         EditText cuadroHora = findViewById(R.id.editTextActualizarHora);

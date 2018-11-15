@@ -32,7 +32,7 @@ public class MainActivity extends Activity implements OnItemClickListener{
         db=openOrCreateDatabase("glucosa.db", MODE_PRIVATE, null );
         db.execSQL("create table if not exists glucosas2 " +
             "(_id integer primary key, fecha string, hora string, ingesta string, "+
-                "glucosa_previa integer, glucosa_posterior integer, insulina integer, hidratos integer);");
+                "glucosa_previa integer, glucosa_posterior integer, insulina string, hidratos integer);");
 
         //llena la tabla de operas
         //llenaTabla();
@@ -63,12 +63,12 @@ public class MainActivity extends Activity implements OnItemClickListener{
         insertaFila("10-10-2018","10:10","Almuerzo",120,178, 3, 3);
         insertaFila("10-10-2018","10:10","Comida",120,178, 3, 3);
         insertaFila("10-10-2018","10:10","Merienda",120,178, 3, 3);
-        insertaFila("10-10-2018","10:10","Cena",120,178, 3, 3);
+        insertaFila("10-10-2018","10:10","Cena",120,178, 3.5, 3);
 
 
     }
 
-    void insertaFila(String fecha, String hora, String ingesta, int glucosa_previa, int glucosa_posterior, int insulina, int hidratos){
+    void insertaFila(String fecha, String hora, String ingesta, int glucosa_previa, int glucosa_posterior, double insulina, int hidratos){
 
         ContentValues values= new ContentValues();
         values.put("fecha", fecha);
@@ -76,7 +76,7 @@ public class MainActivity extends Activity implements OnItemClickListener{
         values.put("ingesta", ingesta);
         values.put("glucosa_previa", glucosa_previa);
         values.put("glucosa_posterior", glucosa_posterior);
-        values.put("insulina", insulina);
+        values.put("insulina", ""+insulina);
         values.put("hidratos", hidratos);
         db.insert("glucosas2", null, values);
     }
