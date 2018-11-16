@@ -41,8 +41,6 @@ public class activity_agregar extends AppCompatActivity {
 
     public void guardar(View v) {
 
-
-
         EditText editTextFecha = (EditText) findViewById(R.id.editTextAgregarFecha);
         String fecha = editTextFecha.getText().toString();
         EditText editTextHora = (EditText) findViewById(R.id.editTextAgregarHora);
@@ -99,12 +97,16 @@ public class activity_agregar extends AppCompatActivity {
 
 
     public void showTimePickerDialog(View v) {
+        EditText editTextHora = (EditText) findViewById(R.id.editTextAgregarHora);
         DialogFragment newFragment = new TimePickerFragment();
+        ((TimePickerFragment) newFragment).setTextView(editTextHora);
         newFragment.show(getSupportFragmentManager(), "timePicker");
     }
 
     public void showDatePickerDialog(View v) {
+        EditText editTextFecha = (EditText) findViewById(R.id.editTextAgregarFecha);
         DialogFragment newFragment = new DatePickerFragment();
+        ((DatePickerFragment) newFragment).setTextView(editTextFecha);
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
