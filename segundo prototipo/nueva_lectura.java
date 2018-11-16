@@ -3,6 +3,7 @@ package efervescencia.es.myapplication;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -116,6 +117,21 @@ public class nueva_lectura extends AppCompatActivity {
 
 
 
+    }
+
+
+    public void showTimePickerDialog(View v) {
+        EditText editTextHora = (EditText) findViewById(R.id.editTextActualizarHora);
+        DialogFragment newFragment = new TimePickerFragment();
+        ((TimePickerFragment) newFragment).setTextView(editTextHora);
+        newFragment.show(getSupportFragmentManager(), "timePicker");
+    }
+
+    public void showDatePickerDialog(View v) {
+        EditText editTextFecha = (EditText) findViewById(R.id.editTextActualizarFecha);
+        DialogFragment newFragment = new DatePickerFragment();
+        ((DatePickerFragment) newFragment).setTextView(editTextFecha);
+        newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
 
