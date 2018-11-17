@@ -136,7 +136,7 @@ public class activity_agregar extends AppCompatActivity {
         //llamamos a calcular dosis
 
         Diabetes2 d = new Diabetes2();
-        d.CalcularDosis();
+        d.CalcularDosis(3,6,135,189,18,119,6);
 
     }
 
