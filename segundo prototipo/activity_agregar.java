@@ -111,4 +111,33 @@ public class activity_agregar extends AppCompatActivity {
     }
 
 
+
+    public void sugerirDosis(View v){
+
+
+        //avisamos de datos necesarios
+
+
+        //Recopilamos datos
+
+        String ingesta;
+        int glucosa_previa_ayer;
+        int glucosa_posterior_ayer;
+        double insulina_ayer;
+        double total_insulina_ayer;
+        int hidratos_ayer;
+        int glucosa_previa_ahora;
+        double insulina_ahora;
+        int hidratos_ahora;
+
+        //Comprobamos que tenemos los datos necesarios
+
+
+        //llamamos a calcular dosis
+
+        Diabetes2 d = new Diabetes2();
+        d.CalcularDosis();
+
+    }
+
 }
