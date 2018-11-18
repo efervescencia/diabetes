@@ -35,6 +35,7 @@ public class DatePickerFragment extends DialogFragment
         // Do something with the date chosen by the user
 
         String mes, dia;
+        month++;
 
         if(month<10){
             mes="0"+month;
