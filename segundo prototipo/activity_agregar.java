@@ -2,12 +2,15 @@ package efervescencia.es.myapplication;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 
 import java.util.Calendar;
@@ -129,7 +132,7 @@ public class activity_agregar extends AppCompatActivity {
         int glucosa_previa_ayer;
         int glucosa_posterior_ayer;
         double insulina_ayer;
-        double total_insulina_ayer;
+        double total_insulina_ayer =0;
         int hidratos_ayer;
 
 
@@ -159,6 +162,22 @@ public class activity_agregar extends AppCompatActivity {
         }
 
                 //Datos de ayer
+
+        db=openOrCreateDatabase("glucosa.db", MODE_PRIVATE, null );
+
+        //-----Realiza una busqueda
+        String[] columns={"_id","fecha", "hora", "ingesta","glucosa_previa","glucosa_posterior", "insulina", "hidratos"};
+
+        Cursor cursor=db.query("glucosas2", columns,"fecha="+fecha,null,null,null,null);
+
+        //-----Recorremos todas las lecturas del dia con el cursor,
+        // para sacar el total de insulina y encontrar la de la ingesta igual a la actual
+
+        while(cursor.moveToNext()){
+            total_insulina_ayer+= Double.parseDouble(cursor.getString(6));
+        }
+
+        db.close();
 
 
 
