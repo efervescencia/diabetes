@@ -43,6 +43,7 @@ public class activity_agregar extends AppCompatActivity {
 
         EditText editTextFecha = (EditText) findViewById(R.id.editTextAgregarFecha);
         String fecha = editTextFecha.getText().toString();
+
         EditText editTextHora = (EditText) findViewById(R.id.editTextAgregarHora);
         String hora = editTextHora.getText().toString();
 
@@ -120,15 +121,46 @@ public class activity_agregar extends AppCompatActivity {
 
         //Recopilamos datos
 
+        String fecha;
         String ingesta;
+        int glucosa_previa_ahora =0;
+        double insulina_ahora=0;
+        int hidratos_ahora=0;
         int glucosa_previa_ayer;
         int glucosa_posterior_ayer;
         double insulina_ayer;
         double total_insulina_ayer;
         int hidratos_ayer;
-        int glucosa_previa_ahora;
-        double insulina_ahora;
-        int hidratos_ahora;
+
+
+        EditText editTextFecha = (EditText) findViewById(R.id.editTextAgregarFecha);
+        fecha = editTextFecha.getText().toString();
+
+        Spinner spinner = (Spinner) findViewById(R.id.spinnerAgregar);
+        ingesta = spinner.getSelectedItem().toString();
+
+        EditText editTextGlucosaPrevia = (EditText) findViewById(R.id.editTextAgregarGlucosaPrevia);
+        String glucosaPrevia = editTextGlucosaPrevia.getText().toString();
+        if(glucosaPrevia.length()>0) {
+            glucosa_previa_ahora = Integer.parseInt(editTextGlucosaPrevia.getText().toString());
+        }
+
+        EditText editTextHidratos = (EditText) findViewById(R.id.editTextAgregarHidratos);
+        String hidratos = editTextHidratos.getText().toString();
+        if(hidratos.length()>0){
+            hidratos_ahora= Integer.parseInt(hidratos);
+        }
+
+        EditText editTextInsulina = (EditText) findViewById(R.id.editTextAgregarInsulina);
+        String insulina = editTextInsulina.getText().toString();
+        System.out.println(insulina.length());
+        if(insulina.length()>0){
+            insulina_ahora = Integer.parseInt(insulina);
+        }
+
+                //Datos de ayer
+
+
 
         //Comprobamos que tenemos los datos necesarios
 
