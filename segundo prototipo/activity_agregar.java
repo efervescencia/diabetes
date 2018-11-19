@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.Calendar;
 
@@ -124,7 +125,7 @@ public class activity_agregar extends AppCompatActivity {
 
         //Recopilamos datos
 
-        String fecha;
+        String fechaAyer;
         String ingesta;
         int glucosa_previa_ahora =0;
         double insulina_ahora=0;
@@ -135,10 +136,21 @@ public class activity_agregar extends AppCompatActivity {
         double total_insulina_ayer =0;
         int hidratos_ayer;
 
+        //obtenemos la fecha de ayer
+        Calendar calendarNow = Calendar.getInstance();
+        calendarNow.add(Calendar.DAY_OF_YEAR, -1);
+        int day = calendarNow.get(Calendar.DAY_OF_MONTH);
+        String dia = "";
+        if(day<10){dia = "0"+day;}
+        else {dia = ""+day;}
+        int month = calendarNow.get(Calendar.MONTH);
+        String mes = "";
+        if(month<10){ mes = "0"+month;}
+        else {mes = ""+month;}
+        int year = calendarNow.get(Calendar.YEAR);
+        fechaAyer = dia+"-"+mes+"-"+year;
 
-        EditText editTextFecha = (EditText) findViewById(R.id.editTextAgregarFecha);
-        fecha = editTextFecha.getText().toString();
-
+        //obtenemos datos necesarios de la lectura actual
         Spinner spinner = (Spinner) findViewById(R.id.spinnerAgregar);
         ingesta = spinner.getSelectedItem().toString();
 
@@ -168,13 +180,19 @@ public class activity_agregar extends AppCompatActivity {
         //-----Realiza una busqueda
         String[] columns={"_id","fecha", "hora", "ingesta","glucosa_previa","glucosa_posterior", "insulina", "hidratos"};
 
-        Cursor cursor=db.query("glucosas2", columns,"fecha="+fecha,null,null,null,null);
+        Cursor cursor=db.query("glucosas2", columns,"fecha="+fechaAyer,null,null,null,null);
 
         //-----Recorremos todas las lecturas del dia con el cursor,
         // para sacar el total de insulina y encontrar la de la ingesta igual a la actual
 
         while(cursor.moveToNext()){
             total_insulina_ayer+= Double.parseDouble(cursor.getString(6));
+            if(ingesta==cursor.getString(3)){
+                glucosa_previa_ayer = cursor.getInt(4);
+                glucosa_posterior_ayer = cursor.getInt(5);
+                insulina_ayer = Double.parseDouble(cursor.getString(6));
+                hidratos_ayer = cursor.getInt(7);
+            }
         }
 
         db.close();
