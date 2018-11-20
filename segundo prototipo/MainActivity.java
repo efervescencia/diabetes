@@ -29,33 +29,34 @@ public class MainActivity extends Activity implements OnItemClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        calendarNow = Calendar.getInstance();
+        actualizarFecha();
+        llenarListView();
+
+    }
+
+
+    void llenarListView(){
         db=openOrCreateDatabase("glucosa.db", MODE_PRIVATE, null );
         db.execSQL("create table if not exists glucosas2 " +
-            "(_id integer primary key, fecha string, hora string, ingesta string, "+
+                "(_id integer primary key, fecha string, hora string, ingesta string, "+
                 "glucosa_previa integer, glucosa_posterior integer, insulina string, hidratos integer);");
 
-        //llena la tabla de operas
-        //llenaTabla();
 
         //-----Realiza una busqueda
         String[] columns={"_id","fecha", "hora", "ingesta","glucosa_previa","glucosa_posterior", "insulina", "hidratos"};
+        String[] condicion={fecha};
 
-        Cursor cursor=db.query("glucosas2", columns,null,null,null,null,null);
+        Cursor cursor=db.query("glucosas2", columns,"fecha=?", condicion, null ,null,null,null);
 
         //---Adapta el cursor al listview
         ListView lv =(ListView) findViewById(R.id.listView);
-        String[] from={"hora","ingesta","glucosa_previa","glucosa_posterior"};
+        String[] from={"fecha","ingesta","glucosa_previa","glucosa_posterior"};
         int[] to={R.id.listadoHora, R.id.listadoIngesta, R.id.listadoGlucosaPrevia, R.id.listadoGlucosaPosterior};
         SimpleCursorAdapter adapter= new SimpleCursorAdapter(this, R.layout.list, cursor, from,to);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(this);
         db.close();
-
-
-        calendarNow = Calendar.getInstance();
-        actualizarFecha();
-
-
     }
 
     void llenaTabla(){
@@ -88,7 +89,7 @@ public class MainActivity extends Activity implements OnItemClickListener{
         String dia = "";
         if(day<10){dia = "0"+day;}
             else {dia = ""+day;}
-        int month = calendarNow.get(Calendar.MONTH);
+        int month = calendarNow.get(Calendar.MONTH)+1;
         String mes = "";
         if(month<10){ mes = "0"+month;}
             else {mes = ""+month;}
@@ -100,11 +101,13 @@ public class MainActivity extends Activity implements OnItemClickListener{
     public void aumentarDia(View v){
         calendarNow.add(Calendar.DAY_OF_YEAR, 1);
         actualizarFecha();
+        llenarListView();
     }
 
     public void disminuirDia(View v){
         calendarNow.add(Calendar.DAY_OF_YEAR, -1);
         actualizarFecha();
+        llenarListView();
     }
 
 

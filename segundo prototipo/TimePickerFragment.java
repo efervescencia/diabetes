@@ -48,7 +48,7 @@ public class TimePickerFragment extends DialogFragment
 
         textView.setText(horas+":"+minutos);
     }
-    
+
 
     public void setTextView(EditText editTextHora) {
         textView = editTextHora;

@@ -1,6 +1,7 @@
 package efervescencia.es.myapplication;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -143,12 +145,19 @@ public class activity_agregar extends AppCompatActivity {
         String dia = "";
         if(day<10){dia = "0"+day;}
         else {dia = ""+day;}
-        int month = calendarNow.get(Calendar.MONTH);
+        int month = calendarNow.get(Calendar.MONTH)+1;
         String mes = "";
         if(month<10){ mes = "0"+month;}
         else {mes = ""+month;}
         int year = calendarNow.get(Calendar.YEAR);
         fechaAyer = dia+"-"+mes+"-"+year;
+
+        Context context = getApplicationContext();
+        CharSequence text = "Fecha de ayer: "+fechaAyer;
+        int duration = Toast.LENGTH_LONG;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
 
         //obtenemos datos necesarios de la lectura actual
         Spinner spinner = (Spinner) findViewById(R.id.spinnerAgregar);
@@ -179,13 +188,19 @@ public class activity_agregar extends AppCompatActivity {
 
         //-----Realiza una busqueda
         String[] columns={"_id","fecha", "hora", "ingesta","glucosa_previa","glucosa_posterior", "insulina", "hidratos"};
+        String[] condicion={fechaAyer};
 
-        Cursor cursor=db.query("glucosas2", columns,"fecha="+fechaAyer,null,null,null,null);
+        Cursor cursor=db.query("glucosas2", columns,"fecha=?",condicion,null,null,null);
 
         //-----Recorremos todas las lecturas del dia con el cursor,
         // para sacar el total de insulina y encontrar la de la ingesta igual a la actual
 
+            String result="entramos a cursor... ";
+
         while(cursor.moveToNext()){
+
+            result+=cursor.getInt(0)+" ";
+
             total_insulina_ayer+= Double.parseDouble(cursor.getString(6));
             if(ingesta==cursor.getString(3)){
                 glucosa_previa_ayer = cursor.getInt(4);
@@ -194,6 +209,14 @@ public class activity_agregar extends AppCompatActivity {
                 hidratos_ayer = cursor.getInt(7);
             }
         }
+
+        context = getApplicationContext();
+        text = "Total de insulina: "+total_insulina_ayer+" "+result;
+        duration = Toast.LENGTH_LONG;
+
+        toast = Toast.makeText(context, text, duration);
+        toast.show();
+
 
         db.close();
 
@@ -204,8 +227,8 @@ public class activity_agregar extends AppCompatActivity {
 
         //llamamos a calcular dosis
 
-        Diabetes2 d = new Diabetes2();
-        d.CalcularDosis(3,6,135,189,18,119,6);
+        //Diabetes2 d = new Diabetes2();
+        //d.CalcularDosis(3,6,135,189,18,119,6);
 
     }
 
