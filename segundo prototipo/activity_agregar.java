@@ -132,11 +132,11 @@ public class activity_agregar extends AppCompatActivity {
         int glucosa_previa_ahora =0;
         double insulina_ahora=0;
         int hidratos_ahora=0;
-        int glucosa_previa_ayer;
-        int glucosa_posterior_ayer;
-        double insulina_ayer;
+        int glucosa_previa_ayer =0;
+        int glucosa_posterior_ayer=0;
+        double insulina_ayer=0;
         double total_insulina_ayer =0;
-        int hidratos_ayer;
+        int hidratos_ayer=0;
 
         //obtenemos la fecha de ayer
         Calendar calendarNow = Calendar.getInstance();
@@ -226,9 +226,9 @@ public class activity_agregar extends AppCompatActivity {
 
 
         //llamamos a calcular dosis
-
+        double dosis_sugerida=0;
         //Diabetes2 d = new Diabetes2();
-        //d.CalcularDosis(3,6,135,189,18,119,6);
+        //dosis_sugerida = d.CalcularDosis(insulina_ayer,hidratos_ayer,glucosa_previa_ayer,glucosa_posterior_ayer,total_insulina_ayer,glucosa_previa_ahora,hidratos_ahora);
 
     }
 
