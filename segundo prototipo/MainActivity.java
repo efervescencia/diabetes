@@ -95,7 +95,8 @@ public class MainActivity extends Activity implements OnItemClickListener{
             else {mes = ""+month;}
         int year = calendarNow.get(Calendar.YEAR);
         fecha = dia+"-"+mes+"-"+year;
-        viewFecha.setText(fecha);
+        String[] dias = {"Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"};
+        viewFecha.setText(fecha+"\n"+dias[calendarNow.get(Calendar.DAY_OF_WEEK)-1]);
     }
 
     public void aumentarDia(View v){
