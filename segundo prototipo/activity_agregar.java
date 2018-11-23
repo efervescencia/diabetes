@@ -37,8 +37,21 @@ public class activity_agregar extends AppCompatActivity {
         calendarNow = Calendar.getInstance();
         Integer horas = calendarNow.get(Calendar.HOUR_OF_DAY);
         Integer minutos = calendarNow.get(Calendar.MINUTE);
-        String hora = horas+":"+minutos;
-        editTextHora.setText(hora);
+        String cadenaHoras;
+        String cadenaMinutos;
+        if(horas<10){
+            cadenaHoras="0"+horas;
+        }
+        else{
+            cadenaHoras=""+horas;
+        }
+        if(minutos<10){
+            cadenaMinutos="0"+minutos;
+        }
+        else{
+            cadenaMinutos=""+minutos;
+        }
+        editTextHora.setText(cadenaHoras+":"+cadenaMinutos);
     }
 
     public void hecho(View v){
@@ -80,9 +93,9 @@ public class activity_agregar extends AppCompatActivity {
         EditText editTextInsulina = (EditText) findViewById(R.id.editTextAgregarInsulina);
         String insulina = editTextInsulina.getText().toString();
         System.out.println(insulina.length());
-        int insulinaNumber =0;
+        double insulinaNumber =0;
         if(insulina.length()>0){
-            insulinaNumber = Integer.parseInt(insulina);
+            insulinaNumber = Double.parseDouble(insulina);
         }
 
         db=openOrCreateDatabase("glucosa.db", MODE_PRIVATE, null );
@@ -179,7 +192,7 @@ public class activity_agregar extends AppCompatActivity {
         String insulina = editTextInsulina.getText().toString();
         System.out.println(insulina.length());
         if(insulina.length()>0){
-            insulina_ahora = Integer.parseInt(insulina);
+            insulina_ahora = Double.parseDouble(insulina);
         }
 
                 //Datos de ayer
