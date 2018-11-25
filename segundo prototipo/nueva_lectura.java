@@ -14,11 +14,9 @@ import android.widget.TextView;
 
 public class nueva_lectura extends AppCompatActivity {
 
-    int _id, glucosa_previa, glucosa_posterior, insulina, hidratos;
-    String ingesta, fecha, hora;
+    int _id, glucosa_previa, glucosa_posterior, hidratos;
+    String insulina, ingesta, fecha, hora;
     SQLiteDatabase db;
-    private int tipos_comida;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +28,7 @@ public class nueva_lectura extends AppCompatActivity {
         ingesta =getIntent().getExtras().getString("ingesta");
         glucosa_previa=getIntent().getExtras().getInt("glucosa_previa");
         glucosa_posterior=getIntent().getExtras().getInt("glucosa_posterior");
-        insulina=getIntent().getExtras().getInt("insulina");
+        insulina=getIntent().getExtras().getString("insulina");
         hidratos=getIntent().getExtras().getInt("hidratos");
 
 
@@ -47,7 +45,7 @@ public class nueva_lectura extends AppCompatActivity {
         EditText cuadroHidratos = findViewById(R.id.editTextActualizarHidratos);
         cuadroHidratos.setText(""+hidratos);
         EditText cuadroInsulina = findViewById(R.id.editTextActualizarInsulina);
-        cuadroInsulina.setText(""+insulina);
+        cuadroInsulina.setText(insulina);
     }
 
 
@@ -93,12 +91,7 @@ public class nueva_lectura extends AppCompatActivity {
         }
 
         EditText editTextInsulina = (EditText) findViewById(R.id.editTextActualizarInsulina);
-        String insulina = editTextInsulina.getText().toString();
-        System.out.println(insulina.length());
-        int insulinaNumber =0;
-        if(insulina.length()>0){
-            insulinaNumber = Integer.parseInt(insulina);
-        }
+        insulina = editTextInsulina.getText().toString();
 
         db=openOrCreateDatabase("glucosa.db", MODE_PRIVATE, null );
 
@@ -108,7 +101,7 @@ public class nueva_lectura extends AppCompatActivity {
         values.put("ingesta", ingesta);
         values.put("glucosa_previa", glucosaPreviaNumber);
         values.put("glucosa_posterior", glucosaPosteriorNumber);
-        values.put("insulina", insulinaNumber);
+        values.put("insulina", insulina);
         values.put("hidratos", hidratosNumber);
         db.update("glucosas2", values,"_id="+_id,null);
 

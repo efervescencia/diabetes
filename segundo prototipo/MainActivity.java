@@ -50,7 +50,7 @@ public class MainActivity extends Activity implements OnItemClickListener{
 
         //---Adapta el cursor al listview
         ListView lv =(ListView) findViewById(R.id.listView);
-        String[] from={"fecha","ingesta","glucosa_previa","glucosa_posterior"};
+        String[] from={"hora","ingesta","glucosa_previa","glucosa_posterior"};
         int[] to={R.id.listadoHora, R.id.listadoIngesta, R.id.listadoGlucosaPrevia, R.id.listadoGlucosaPosterior};
         SimpleCursorAdapter adapter= new SimpleCursorAdapter(this, R.layout.list, cursor, from,to);
         lv.setAdapter(adapter);
@@ -59,16 +59,16 @@ public class MainActivity extends Activity implements OnItemClickListener{
     }
 
     void llenaTabla(){
-        insertaFila("10-10-2018","10:10","Desayuno",120,178, 3, 3);
-        insertaFila("10-10-2018","10:10","Almuerzo",120,178, 3, 3);
-        insertaFila("10-10-2018","10:10","Comida",120,178, 3, 3);
-        insertaFila("10-10-2018","10:10","Merienda",120,178, 3, 3);
-        insertaFila("10-10-2018","10:10","Cena",120,178, 3.5, 3);
+        insertaFila("10-10-2018","10:10","Desayuno",120,178, "3", 3);
+        insertaFila("10-10-2018","10:10","Almuerzo",120,178, "3", 3);
+        insertaFila("10-10-2018","10:10","Comida",120,178, "3", 3);
+        insertaFila("10-10-2018","10:10","Merienda",120,178, "3", 3);
+        insertaFila("10-10-2018","10:10","Cena",120,178, "3.5", 3);
 
 
     }
 
-    void insertaFila(String fecha, String hora, String ingesta, int glucosa_previa, int glucosa_posterior, double insulina, int hidratos){
+    void insertaFila(String fecha, String hora, String ingesta, int glucosa_previa, int glucosa_posterior, String insulina, int hidratos){
 
         ContentValues values= new ContentValues();
         values.put("fecha", fecha);
@@ -76,7 +76,7 @@ public class MainActivity extends Activity implements OnItemClickListener{
         values.put("ingesta", ingesta);
         values.put("glucosa_previa", glucosa_previa);
         values.put("glucosa_posterior", glucosa_posterior);
-        values.put("insulina", ""+insulina);
+        values.put("insulina", insulina);
         values.put("hidratos", hidratos);
         db.insert("glucosas2", null, values);
     }
@@ -128,7 +128,7 @@ public void agregar(View v){
         String ingesta=cursor.getString(3);
         int glucosa_previa=cursor.getInt(4);
         int glucosa_posterior=cursor.getInt(5);
-        int insulina=cursor.getInt(6);
+        String insulina=cursor.getString(6);
         int hidratos=cursor.getInt(7);
 
         /*
