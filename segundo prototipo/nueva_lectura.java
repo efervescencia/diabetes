@@ -36,7 +36,7 @@ public class nueva_lectura extends AppCompatActivity {
         cuadroFecha.setText(fecha);
         EditText cuadroHora = findViewById(R.id.editTextActualizarHora);
         cuadroHora.setText(hora);
-        TextView tv= (TextView) findViewById(R.id.textViewIngesta);
+        TextView tv= (TextView) findViewById(R.id.editTextIngesta);
         tv.setText(ingesta);
         EditText cuadroGlucosaPrevia = findViewById(R.id.editTextActualizarGlucosaPrevia);
         cuadroGlucosaPrevia.setText(""+glucosa_previa);

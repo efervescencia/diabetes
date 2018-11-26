@@ -168,9 +168,8 @@ public class activity_agregar extends AppCompatActivity {
         Context context = getApplicationContext();
         CharSequence text = "Fecha de ayer: "+fechaAyer;
         int duration = Toast.LENGTH_LONG;
-
         Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
+        //toast.show();
 
         //obtenemos datos necesarios de la lectura actual
         Spinner spinner = (Spinner) findViewById(R.id.spinnerAgregar);
@@ -215,7 +214,11 @@ public class activity_agregar extends AppCompatActivity {
             result+=cursor.getInt(0)+" ";
 
             total_insulina_ayer+= Double.parseDouble(cursor.getString(6));
-            if(ingesta==cursor.getString(3)){
+
+
+
+            if(ingesta.equals(cursor.getString(3))){
+
                 glucosa_previa_ayer = cursor.getInt(4);
                 glucosa_posterior_ayer = cursor.getInt(5);
                 insulina_ayer = Double.parseDouble(cursor.getString(6));
@@ -228,7 +231,7 @@ public class activity_agregar extends AppCompatActivity {
         duration = Toast.LENGTH_LONG;
 
         toast = Toast.makeText(context, text, duration);
-        toast.show();
+        //toast.show();
 
 
         db.close();
@@ -240,8 +243,18 @@ public class activity_agregar extends AppCompatActivity {
 
         //llamamos a calcular dosis
         double dosis_sugerida=0;
-        //Diabetes2 d = new Diabetes2();
-        //dosis_sugerida = d.CalcularDosis(insulina_ayer,hidratos_ayer,glucosa_previa_ayer,glucosa_posterior_ayer,total_insulina_ayer,glucosa_previa_ahora,hidratos_ahora);
+        Diabetes2 d = new Diabetes2();
+        dosis_sugerida = d.CalcularDosis(insulina_ayer,hidratos_ayer,glucosa_previa_ayer,glucosa_posterior_ayer,total_insulina_ayer,glucosa_previa_ahora,hidratos_ahora);
+
+        text = "InsulinaAyer: "+insulina_ayer+" HidratosAyer: "+hidratos_ayer+" GlucoPrevAyer: "+glucosa_previa_ayer+" GlucoPostAyer: "+glucosa_posterior_ayer+" TotalInsuAyer: "
+                +total_insulina_ayer+" GlucoPrevAhora: "+glucosa_previa_ahora+" HidratosAhora: "+hidratos_ahora;
+        toast = Toast.makeText(context, text, duration);
+        toast.show();
+
+        text = "Dosis Sugerida: "+dosis_sugerida;
+        toast = Toast.makeText(context, text, duration);
+        toast.show();
+
 
     }
 
