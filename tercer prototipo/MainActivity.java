@@ -1,7 +1,5 @@
 package efervescencia.es.myapplication;
 
-import android.content.res.ColorStateList;
-import android.database.sqlite.SQLiteCursor;
 import android.os.Bundle;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -16,16 +14,14 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import java.util.Calendar;
+import java.util.Vector;
 
-import static efervescencia.es.myapplication.R.color.redFuerte;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnItemClickListener{
@@ -120,7 +116,7 @@ public class MainActivity extends AppCompatActivity
 
         Cursor cursor=db.query("glucosas2", columns,"fecha=?", condicion, null ,null,null,null);
 
-        //---Adapta el cursor al listview
+        /*---Adapta el cursor al listview
         ListView lv =(ListView) findViewById(R.id.listView);
         String[] from={"hora","ingesta","glucosa_previa","glucosa_posterior"};
         int[] to={R.id.listadoHora, R.id.listadoIngesta, R.id.listadoGlucosaPrevia, R.id.listadoGlucosaPosterior};
@@ -128,17 +124,23 @@ public class MainActivity extends AppCompatActivity
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(this);
         db.close();
+        */
 
-        revisarListView();
-
+        ListView lv=(ListView) findViewById(R.id.listView);
+        Vector<Lectura> lecturas = new Vector<Lectura>();
+        if (cursor.moveToFirst()) {
+            //Recorremos el cursor hasta que no haya más registros
+            do {
+                Lectura l = new Lectura (cursor.getString(2), cursor.getString(3),cursor.getString(4), cursor.getString(5));
+                lecturas.add(l);
+            } while(cursor.moveToNext());
+        }
+        MiAdaptador miAdaptador = new MiAdaptador(this,lecturas);
+        lv.setAdapter(miAdaptador);
+        lv.setOnItemClickListener(this);
+        db.close();
     }
 
-    void revisarListView(){
-
-    
-
-
-    }
 
     void llenaTabla(){
         insertaFila("10-10-2018","10:10","Desayuno",120,178, "3", 3);
