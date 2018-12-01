@@ -12,22 +12,21 @@ import android.widget.TextView;
 
 public class nueva_lectura extends AppCompatActivity {
 
-    int _id, glucosa_previa, glucosa_posterior, hidratos;
-    String insulina, ingesta, fecha, hora;
+    String insulina, ingesta, fecha, hora, glucosa_previa, glucosa_posterior, _id, hidratos;
     SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nueva_lectura);
-        _id= getIntent().getExtras().getInt("_id");
+        _id= getIntent().getExtras().getString("_id");
         fecha = getIntent().getExtras().getString("fecha");
         hora = getIntent().getExtras().getString("hora");
         ingesta =getIntent().getExtras().getString("ingesta");
-        glucosa_previa=getIntent().getExtras().getInt("glucosa_previa");
-        glucosa_posterior=getIntent().getExtras().getInt("glucosa_posterior");
+        glucosa_previa=getIntent().getExtras().getString("glucosa_previa");
+        glucosa_posterior=getIntent().getExtras().getString("glucosa_posterior");
         insulina=getIntent().getExtras().getString("insulina");
-        hidratos=getIntent().getExtras().getInt("hidratos");
+        hidratos=getIntent().getExtras().getString("hidratos");
 
 
         EditText cuadroFecha = findViewById(R.id.editTextActualizarFecha);

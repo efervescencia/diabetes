@@ -1,5 +1,6 @@
 package efervescencia.es.myapplication;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -19,6 +20,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.Calendar;
 import java.util.Vector;
 
@@ -132,6 +135,10 @@ public class MainActivity extends AppCompatActivity
             //Recorremos el cursor hasta que no haya más registros
             do {
                 Lectura l = new Lectura (cursor.getString(2), cursor.getString(3),cursor.getString(4), cursor.getString(5));
+                l.setId(cursor.getInt(0));
+                l.setFecha(cursor.getString(1));
+                l.setInsulina(cursor.getString(6));
+                l.setHidratos(cursor.getInt(7));
                 lecturas.add(l);
             } while(cursor.moveToNext());
         }
@@ -205,25 +212,25 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        Cursor cursor = (Cursor) parent.getItemAtPosition(position);
-        int _id=cursor.getInt(0);
-        String fecha=cursor.getString(1);
-        String hora=cursor.getString(2);
-        String ingesta=cursor.getString(3);
-        int glucosa_previa=cursor.getInt(4);
-        int glucosa_posterior=cursor.getInt(5);
-        String insulina=cursor.getString(6);
-        int hidratos=cursor.getInt(7);
+        Lectura l = (Lectura) parent.getAdapter().getItem(position);
 
+        String  _id= ""+l.getId();
+        String fecha= l.getFecha();
+        String hora= l.getHora();
+        String ingesta= l.getIngesta();
+        String glucosa_previa= l.getGlucosaPrevia();
+        String glucosa_posterior= l.getGlucosaPosterior();
+        String insulina= l.getInsulina();
+        String hidratos= ""+l.getHidratos();
 
-        /*
+/*
         Context context = getApplicationContext();
         CharSequence text = "Hello toast! "+_id+ " "+ingesta+" "+glucosa_previa;
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
-        */
+*/
 
         Intent intent = new Intent(this, nueva_lectura.class);
         intent.putExtra("_id", _id);
