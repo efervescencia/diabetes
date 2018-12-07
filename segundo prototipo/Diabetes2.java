@@ -1,17 +1,57 @@
-package efervescencia.es.myapplication;
+package packDiabetes;
 
 public class Diabetes2 {
 	
-	int BARRERA_HIPO = 80;
-	int BARRERA_HIPER = 180;
-	int SUPER_HIPO = 70;
-	int SUPER_HIPER = 250;
+	int barreraHipo = 80;
+	int barreraHiper = 180;
+	int hipoGrave = 70;
+	int hiperGrave = 250;
 	
 	double ratioInsulina = 0;
 	double ratioInsulinaPorHidratos = 0;
 	
 	
 	
+	public int getBarreraHipo() {
+		return barreraHipo;
+	}
+
+
+	public void setBarreraHipo(int barreraHipo) {
+		this.barreraHipo = barreraHipo;
+	}
+
+
+	public int getBarreraHiper() {
+		return barreraHiper;
+	}
+
+
+	public void setBarreraHiper(int barreraHiper) {
+		this.barreraHiper = barreraHiper;
+	}
+
+
+	public int getHipoGrave() {
+		return hipoGrave;
+	}
+
+
+	public void setHipoGrave(int hipoGrave) {
+		this.hipoGrave = hipoGrave;
+	}
+
+
+	public int getHiperGrave() {
+		return hiperGrave;
+	}
+
+
+	public void setHiperGrave(int hiperGrave) {
+		this.hiperGrave = hiperGrave;
+	}
+
+
 	public double CalcularDosis(double insulinaAyer, double hidratosAyer, double glucosaPreviaAyer, double glucosaPosteriorAyer, double totalInsulinaAyer, double glucosaActual, double hidratosActual){
 	
 		//Formulas basicas
@@ -34,6 +74,8 @@ public class Diabetes2 {
 		
 		//evitamos los resultados negativos
 		if(insulina<0){insulina=0;}
+		
+
 		
 		return insulina;
 	}
