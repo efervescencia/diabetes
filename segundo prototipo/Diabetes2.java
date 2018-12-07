@@ -56,7 +56,7 @@ public class Diabetes2 {
 	
 		//Formulas basicas
 		ratioInsulina = 1800 / totalInsulinaAyer;
-		//ratio en medias dosis
+		//ratio insulina por hidratos
 		ratioInsulinaPorHidratos = (insulinaAyer / hidratosAyer);
 		double diferenciaHidratos = hidratosActual - hidratosAyer;
 		double insulina = CalcularAccion(insulinaAyer, glucosaPreviaAyer, glucosaPosteriorAyer, totalInsulinaAyer, glucosaActual); 
@@ -75,7 +75,10 @@ public class Diabetes2 {
 		//evitamos los resultados negativos
 		if(insulina<0){insulina=0;}
 		
-
+		//Redondeamos para no tener dosis imposibles
+				insulina *=2;
+				insulina = Math.floor(insulina);
+				insulina /=2;
 		
 		return insulina;
 	}
