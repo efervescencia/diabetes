@@ -1,4 +1,4 @@
-package packDiabetes;
+package efervescencia.es.myapplication;
 
 public class Diabetes2 {
 	

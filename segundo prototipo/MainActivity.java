@@ -1,5 +1,7 @@
 package efervescencia.es.myapplication;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -19,14 +21,22 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.Calendar;
+import java.util.Vector;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnItemClickListener{
 
-    Calendar calendarNow = null;
-    String fecha = "";
-    SQLiteDatabase db;
+    private Calendar calendarNow = null;
+    private String fecha = "";
+    private SQLiteDatabase db;
+    private int barreraHipo;
+    private int barreraHiper;
+    private int hipoSevera;
+    private int hiperSevera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +58,13 @@ public class MainActivity extends AppCompatActivity
         actualizarFecha();
         llenarListView();
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -75,6 +92,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(this, null));
             return true;
         }
 
@@ -87,9 +105,9 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_slideshow) {
+        if (id == R.id.nav_alarm) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_alarm) {
 
         } else if (id == R.id.nav_share) {
 
@@ -114,7 +132,7 @@ public class MainActivity extends AppCompatActivity
 
         Cursor cursor=db.query("glucosas2", columns,"fecha=?", condicion, null ,null,null,null);
 
-        //---Adapta el cursor al listview
+        /*---Adapta el cursor al listview
         ListView lv =(ListView) findViewById(R.id.listView);
         String[] from={"hora","ingesta","glucosa_previa","glucosa_posterior"};
         int[] to={R.id.listadoHora, R.id.listadoIngesta, R.id.listadoGlucosaPrevia, R.id.listadoGlucosaPosterior};
@@ -122,7 +140,27 @@ public class MainActivity extends AppCompatActivity
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(this);
         db.close();
+        */
+
+        ListView lv=(ListView) findViewById(R.id.listView);
+        Vector<Lectura> lecturas = new Vector<Lectura>();
+        if (cursor.moveToFirst()) {
+            //Recorremos el cursor hasta que no haya más registros
+            do {
+                Lectura l = new Lectura (cursor.getString(2), cursor.getString(3),cursor.getString(4), cursor.getString(5));
+                l.setId(cursor.getInt(0));
+                l.setFecha(cursor.getString(1));
+                l.setInsulina(cursor.getString(6));
+                l.setHidratos(cursor.getInt(7));
+                lecturas.add(l);
+            } while(cursor.moveToNext());
+        }
+        MiAdaptador miAdaptador = new MiAdaptador(this,lecturas);
+        lv.setAdapter(miAdaptador);
+        lv.setOnItemClickListener(this);
+        db.close();
     }
+
 
     void llenaTabla(){
         insertaFila("10-10-2018","10:10","Desayuno",120,178, "3", 3);
@@ -187,25 +225,25 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        Cursor cursor = (Cursor) parent.getItemAtPosition(position);
-        int _id=cursor.getInt(0);
-        String fecha=cursor.getString(1);
-        String hora=cursor.getString(2);
-        String ingesta=cursor.getString(3);
-        int glucosa_previa=cursor.getInt(4);
-        int glucosa_posterior=cursor.getInt(5);
-        String insulina=cursor.getString(6);
-        int hidratos=cursor.getInt(7);
+        Lectura l = (Lectura) parent.getAdapter().getItem(position);
 
+        String  _id= ""+l.getId();
+        String fecha= l.getFecha();
+        String hora= l.getHora();
+        String ingesta= l.getIngesta();
+        String glucosa_previa= l.getGlucosaPrevia();
+        String glucosa_posterior= l.getGlucosaPosterior();
+        String insulina= l.getInsulina();
+        String hidratos= ""+l.getHidratos();
 
-        /*
+/*
         Context context = getApplicationContext();
         CharSequence text = "Hello toast! "+_id+ " "+ingesta+" "+glucosa_previa;
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
-        */
+*/
 
         Intent intent = new Intent(this, nueva_lectura.class);
         intent.putExtra("_id", _id);

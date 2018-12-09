@@ -136,7 +136,10 @@ public class activity_agregar extends AppCompatActivity {
 
 
         //Recopilamos datos
-
+        String fecha = getIntent().getExtras().getString("fecha");
+        int year = Integer.parseInt(fecha.substring(7));
+        int month = Integer.parseInt(fecha.substring(3,5))-1;
+        int day = Integer.parseInt(fecha.substring(0,2));
         String fechaAyer;
         String ingesta;
         int glucosa_previa_ahora =0;
@@ -150,23 +153,25 @@ public class activity_agregar extends AppCompatActivity {
 
         //obtenemos la fecha de ayer
         Calendar calendarNow = Calendar.getInstance();
+
+        calendarNow.set(year,month,day);
         calendarNow.add(Calendar.DAY_OF_YEAR, -1);
-        int day = calendarNow.get(Calendar.DAY_OF_MONTH);
-        String dia = "";
-        if(day<10){dia = "0"+day;}
-        else {dia = ""+day;}
-        int month = calendarNow.get(Calendar.MONTH)+1;
-        String mes = "";
-        if(month<10){ mes = "0"+month;}
-        else {mes = ""+month;}
-        int year = calendarNow.get(Calendar.YEAR);
-        fechaAyer = dia+"-"+mes+"-"+year;
+        int dayAnterior = calendarNow.get(Calendar.DAY_OF_MONTH);
+        String diaAnterior = "";
+        if(dayAnterior<10){diaAnterior = "0"+dayAnterior;}
+        else {diaAnterior = ""+dayAnterior;}
+        int monthAnterior = calendarNow.get(Calendar.MONTH)+1;
+        String mesAnterior = "";
+        if(monthAnterior<10){ mesAnterior = "0"+monthAnterior;}
+        else {mesAnterior = ""+monthAnterior;}
+        int yearAnterior = calendarNow.get(Calendar.YEAR);
+        fechaAyer = diaAnterior+"-"+mesAnterior+"-"+yearAnterior;
 
         Context context = getApplicationContext();
-        CharSequence text = "Fecha de ayer: "+fechaAyer;
+        CharSequence text = "Fecha del dia anterior: "+fechaAyer;
         int duration = Toast.LENGTH_LONG;
         Toast toast = Toast.makeText(context, text, duration);
-        //toast.show();
+        toast.show();
 
         //obtenemos datos necesarios de la lectura actual
         Spinner spinner = (Spinner) findViewById(R.id.spinnerAgregar);
