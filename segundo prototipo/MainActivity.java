@@ -3,6 +3,7 @@ package efervescencia.es.myapplication;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -33,10 +34,8 @@ public class MainActivity extends AppCompatActivity
     private Calendar calendarNow = null;
     private String fecha = "";
     private SQLiteDatabase db;
-    private int barreraHipo;
-    private int barreraHiper;
-    private int hipoSevera;
-    private int hiperSevera;
+    private Bundle savedInstanceState;
+    private int hipo, hiper, hipoSevera, hiperSevera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +59,17 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onResume(){
+    protected void onResume() {
         super.onResume();
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+        hipo = Integer.parseInt(pref.getString("hipo","80").replaceAll("\\D+",""));
+        hiper = Integer.parseInt(pref.getString("hiper","180").replaceAll("\\D+",""));
+        hipoSevera = Integer.parseInt(pref.getString("hipoSevera","70").replaceAll("\\D+",""));
+        hiperSevera = Integer.parseInt(pref.getString("hiperSevera","250").replaceAll("\\D+",""));
 
+        Toast toast = Toast.makeText(this, "HELLO: "+hipo+" "+hiper+" "+hipoSevera+" "+hiperSevera, Toast.LENGTH_LONG);
+        toast.show();
     }
-
 
     @Override
     public void onBackPressed() {
@@ -92,7 +97,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            startActivity(new Intent(this, null));
+            startActivity(new Intent(this, Preferencias.class));
             return true;
         }
 
@@ -155,7 +160,10 @@ public class MainActivity extends AppCompatActivity
                 lecturas.add(l);
             } while(cursor.moveToNext());
         }
-        MiAdaptador miAdaptador = new MiAdaptador(this,lecturas);
+        //leemos los valores de prefs
+
+        //creamos el adapter del listview
+        MiAdaptador miAdaptador = new MiAdaptador(this,lecturas, hipo, hiperSevera);
         lv.setAdapter(miAdaptador);
         lv.setOnItemClickListener(this);
         db.close();
@@ -218,6 +226,12 @@ public class MainActivity extends AppCompatActivity
     public void agregar(View v){
         Intent intent = new Intent(this, activity_agregar.class);
         intent.putExtra("fecha", fecha);
+
+        intent.putExtra("hipo", hipo);
+        intent.putExtra("hiper", hiper);
+        intent.putExtra("hipoSevera", hipoSevera);
+        intent.putExtra("hiperSevera", hiperSevera);
+
         startActivity(intent);
     }
 

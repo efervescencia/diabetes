@@ -1,8 +1,10 @@
 package efervescencia.es.myapplication;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
+import android.preference.PreferenceManager;
 import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,11 +23,15 @@ public class MiAdaptador extends BaseAdapter {
 
     private final Activity actividad;
     private final Vector<Lectura> lecturas;
+    int barreraHipo =80;
+    int hiperSevera=250;
 
-    public MiAdaptador(Activity pActividad, Vector<Lectura> pLecturas){
+    public MiAdaptador(Activity pActividad, Vector<Lectura> pLecturas, int hipo, int hiperS){
         super();
         actividad = pActividad;
         lecturas = pLecturas;
+        barreraHipo = hipo;
+        hiperSevera = hiperS;
     }
 
 
@@ -58,7 +64,7 @@ public class MiAdaptador extends BaseAdapter {
         int gp = 0;
         if(lecturas.get(position).getGlucosaPrevia().length()>0){
             gp = Integer.parseInt(lecturas.get(position).getGlucosaPrevia());
-            if(gp>260 || gp<80){
+            if(gp>hiperSevera || gp<barreraHipo){
 
                 Drawable image = actividad.getResources().getDrawable(R.drawable.ic_warning_black_24dp );
                 int h = image.getIntrinsicHeight();
@@ -78,7 +84,7 @@ public class MiAdaptador extends BaseAdapter {
         int gpost = 0;
         if(lecturas.get(position).getGlucosaPosterior().length()>0){
             gpost = Integer.parseInt(lecturas.get(position).getGlucosaPosterior());
-            if(gpost>260 || gpost<80){
+            if(gpost>hiperSevera || gpost<barreraHipo){
 
                 Drawable image = actividad.getResources().getDrawable( R.drawable.ic_warning_black_24dp );
                 int h = image.getIntrinsicHeight();

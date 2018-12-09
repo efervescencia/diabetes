@@ -3,8 +3,10 @@ package efervescencia.es.myapplication;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -240,12 +242,27 @@ public class activity_agregar extends AppCompatActivity {
 
 
 
-        //Comprobamos que tenemos los datos necesarios
+        //Obtenemos umbrales de shared preferences via intent extras
+        int barreraHipo = getIntent().getExtras().getInt("hipo",80);
+        int barreraHiper = getIntent().getExtras().getInt("hiper",180);
+        int hipoSevera = getIntent().getExtras().getInt("hipoSevera",70);
+        int hiperSevera = getIntent().getExtras().getInt("hiperSevera",250);
+
+        toast = Toast.makeText(context, "Umbrales: "+barreraHipo+" "+barreraHiper+" "+hipoSevera+" "+hiperSevera, duration);
+        toast.show();
 
 
-        //llamamos a calcular dosis
+        //Preparamos la clase para calcular dosis
         double dosis_sugerida=0;
         Diabetes2 d = new Diabetes2();
+
+        //fijamos los umbrales de las preferencias
+        d.setBarreraHipo(barreraHipo);
+        d.setBarreraHiper(barreraHiper);
+        d.setHipoGrave(hipoSevera);
+        d.setHiperGrave(hiperSevera);
+
+        //solicitamos la dosis adecuada
         dosis_sugerida = d.CalcularDosis(insulina_ayer,hidratos_ayer,glucosa_previa_ayer,glucosa_posterior_ayer,total_insulina_ayer,glucosa_previa_ahora,hidratos_ahora);
 
         text = "InsulinaAyer: "+insulina_ayer+" HidratosAyer: "+hidratos_ayer+" GlucoPrevAyer: "+glucosa_previa_ayer+" GlucoPostAyer: "+glucosa_posterior_ayer+" TotalInsuAyer: "
