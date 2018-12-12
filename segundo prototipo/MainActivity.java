@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity
     private Bundle savedInstanceState;
     private int hipo, hiper, hipoSevera, hiperSevera;
     private Toast toast;
-    private boolean DEBUG = false;
+    private boolean DEBUG = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity
 
         calendarNow = Calendar.getInstance();
         actualizarFecha();
-        llenarListView();
+
     }
 
     @Override
@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity
             toast = Toast.makeText(this, "HELLO: " + hipo + " " + hiper + " " + hipoSevera + " " + hiperSevera, Toast.LENGTH_LONG);
             toast.show();
         }
+
+        llenarListView();
     }
 
     @Override

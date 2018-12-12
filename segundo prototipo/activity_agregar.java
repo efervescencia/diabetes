@@ -24,7 +24,7 @@ public class activity_agregar extends AppCompatActivity {
     SQLiteDatabase db;
     private int duration = Toast.LENGTH_LONG;
     private Toast toast;
-    private boolean DEBUG = false;
+    private boolean DEBUG = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,8 +141,9 @@ public class activity_agregar extends AppCompatActivity {
 
 
         //Recopilamos datos
-        String fecha = getIntent().getExtras().getString("fecha");
-        int year = Integer.parseInt(fecha.substring(7));
+        EditText editTextFecha = (EditText) findViewById(R.id.editTextAgregarFecha);
+        String fecha = String.valueOf(editTextFecha.getText());
+        int year = Integer.parseInt(fecha.substring(5));
         int month = Integer.parseInt(fecha.substring(3,5))-1;
         int day = Integer.parseInt(fecha.substring(0,2));
         String fechaAyer;
@@ -162,14 +163,17 @@ public class activity_agregar extends AppCompatActivity {
         calendarNow.set(year,month,day);
         calendarNow.add(Calendar.DAY_OF_YEAR, -1);
         int dayAnterior = calendarNow.get(Calendar.DAY_OF_MONTH);
-        String diaAnterior = "";
+        int monthAnterior = calendarNow.get(Calendar.MONTH)+1;
+        String yearAnterior = ""+(calendarNow.get(Calendar.YEAR)-1);
+
+        String diaAnterior;
         if(dayAnterior<10){diaAnterior = "0"+dayAnterior;}
         else {diaAnterior = ""+dayAnterior;}
-        int monthAnterior = calendarNow.get(Calendar.MONTH)+1;
-        String mesAnterior = "";
+
+        String mesAnterior;
         if(monthAnterior<10){ mesAnterior = "0"+monthAnterior;}
         else {mesAnterior = ""+monthAnterior;}
-        int yearAnterior = calendarNow.get(Calendar.YEAR);
+
         fechaAyer = diaAnterior+"-"+mesAnterior+"-"+yearAnterior;
 
         Context context = getApplicationContext();
