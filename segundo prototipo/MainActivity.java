@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity
     private SQLiteDatabase db;
     private Bundle savedInstanceState;
     private int hipo, hiper, hipoSevera, hiperSevera;
+    private Toast toast;
+    private boolean DEBUG = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +69,10 @@ public class MainActivity extends AppCompatActivity
         hipoSevera = Integer.parseInt(pref.getString("hipoSevera","70").replaceAll("\\D+",""));
         hiperSevera = Integer.parseInt(pref.getString("hiperSevera","250").replaceAll("\\D+",""));
 
-        Toast toast = Toast.makeText(this, "HELLO: "+hipo+" "+hiper+" "+hipoSevera+" "+hiperSevera, Toast.LENGTH_LONG);
-        toast.show();
+        if(DEBUG) {
+            toast = Toast.makeText(this, "HELLO: " + hipo + " " + hiper + " " + hipoSevera + " " + hiperSevera, Toast.LENGTH_LONG);
+            toast.show();
+        }
     }
 
     @Override
@@ -255,8 +259,10 @@ public class MainActivity extends AppCompatActivity
         CharSequence text = "Hello toast! "+_id+ " "+ingesta+" "+glucosa_previa;
         int duration = Toast.LENGTH_SHORT;
 
-        Toast toast = Toast.makeText(context, text, duration);
+        if(DEBUG){
+        toast = Toast.makeText(context, text, duration);
         toast.show();
+        }
 */
 
         Intent intent = new Intent(this, nueva_lectura.class);

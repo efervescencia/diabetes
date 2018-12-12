@@ -22,6 +22,9 @@ public class activity_agregar extends AppCompatActivity {
     private static final String TAG = "";
     Calendar calendarNow = null;
     SQLiteDatabase db;
+    private int duration = Toast.LENGTH_LONG;
+    private Toast toast;
+    private boolean DEBUG = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,9 +174,10 @@ public class activity_agregar extends AppCompatActivity {
 
         Context context = getApplicationContext();
         CharSequence text = "Fecha del dia anterior: "+fechaAyer;
-        int duration = Toast.LENGTH_LONG;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
+        if(DEBUG) {
+            toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
 
         //obtenemos datos necesarios de la lectura actual
         Spinner spinner = (Spinner) findViewById(R.id.spinnerAgregar);
@@ -232,11 +236,10 @@ public class activity_agregar extends AppCompatActivity {
 
         context = getApplicationContext();
         text = "Total de insulina: "+total_insulina_ayer+" "+result;
-        duration = Toast.LENGTH_LONG;
-
-        toast = Toast.makeText(context, text, duration);
-        //toast.show();
-
+        if(DEBUG) {
+            toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
 
         db.close();
 
@@ -248,8 +251,10 @@ public class activity_agregar extends AppCompatActivity {
         int hipoSevera = getIntent().getExtras().getInt("hipoSevera",70);
         int hiperSevera = getIntent().getExtras().getInt("hiperSevera",250);
 
-        toast = Toast.makeText(context, "Umbrales: "+barreraHipo+" "+barreraHiper+" "+hipoSevera+" "+hiperSevera, duration);
-        toast.show();
+        if(DEBUG) {
+            toast = Toast.makeText(context, "Umbrales: " + barreraHipo + " " + barreraHiper + " " + hipoSevera + " " + hiperSevera, duration);
+            toast.show();
+        }
 
 
         //Preparamos la clase para calcular dosis
@@ -265,14 +270,17 @@ public class activity_agregar extends AppCompatActivity {
         //solicitamos la dosis adecuada
         dosis_sugerida = d.CalcularDosis(insulina_ayer,hidratos_ayer,glucosa_previa_ayer,glucosa_posterior_ayer,total_insulina_ayer,glucosa_previa_ahora,hidratos_ahora);
 
-        text = "InsulinaAyer: "+insulina_ayer+" HidratosAyer: "+hidratos_ayer+" GlucoPrevAyer: "+glucosa_previa_ayer+" GlucoPostAyer: "+glucosa_posterior_ayer+" TotalInsuAyer: "
-                +total_insulina_ayer+" GlucoPrevAhora: "+glucosa_previa_ahora+" HidratosAhora: "+hidratos_ahora;
-        toast = Toast.makeText(context, text, duration);
-        toast.show();
+        if(DEBUG) {
+            text = "InsulinaAyer: " + insulina_ayer + " HidratosAyer: " + hidratos_ayer + " GlucoPrevAyer: " + glucosa_previa_ayer + " GlucoPostAyer: " + glucosa_posterior_ayer + " TotalInsuAyer: "
+                    + total_insulina_ayer + " GlucoPrevAhora: " + glucosa_previa_ahora + " HidratosAhora: " + hidratos_ahora;
+            toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
 
-        text = "Dosis Sugerida: "+dosis_sugerida;
-        toast = Toast.makeText(context, text, duration);
-        toast.show();
+            text = "Dosis Sugerida: " + dosis_sugerida;
+            toast = Toast.makeText(context, text, duration);
+            toast.show();
+
 
 
     }
