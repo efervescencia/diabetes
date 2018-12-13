@@ -24,7 +24,7 @@ public class activity_agregar extends AppCompatActivity {
     SQLiteDatabase db;
     private int duration = Toast.LENGTH_LONG;
     private Toast toast;
-    private boolean DEBUG = true;
+    private boolean DEBUG = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

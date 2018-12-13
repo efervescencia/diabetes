@@ -71,6 +71,7 @@ public class MiAdaptador extends BaseAdapter {
                 int w = image.getIntrinsicWidth();
                 image.setBounds( 0, 0, w, h );
                 tvGlucosaPrevia.setCompoundDrawables( image, null, null, null );
+                tvGlucosaPrevia.setCompoundDrawableTintList(actividad.getColorStateList(R.color.redFuerte));
                 Animation animation = AnimationUtils.loadAnimation(actividad, R.anim.animation_rapida);
                 tvGlucosaPrevia.startAnimation(animation);
             }
@@ -91,6 +92,12 @@ public class MiAdaptador extends BaseAdapter {
                 int w = image.getIntrinsicWidth();
                 image.setBounds( 0, 0, w, h );
                 tvGlucosaPosterior.setCompoundDrawables( image, null, null, null );
+                if(gpost==0) {
+                    tvGlucosaPosterior.setCompoundDrawableTintList(actividad.getColorStateList(R.color.amarillo));
+                }
+                else{
+                    tvGlucosaPosterior.setCompoundDrawableTintList(actividad.getColorStateList(R.color.redFuerte));
+                }
                 Animation animation = AnimationUtils.loadAnimation(actividad, R.anim.animation_rapida);
                 tvGlucosaPosterior.startAnimation(animation);
             }

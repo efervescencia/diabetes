@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity
     private Bundle savedInstanceState;
     private int hipo, hiper, hipoSevera, hiperSevera;
     private Toast toast;
-    private boolean DEBUG = true;
+    private boolean DEBUG = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +75,16 @@ public class MainActivity extends AppCompatActivity
         }
 
         llenarListView();
+        ListView lv = findViewById(R.id.listView);
+
+                lv.setOnTouchListener(new OnSwipeTouchListener(this) {
+            public void onSwipeRight() {
+                disminuirDia(null);
+            }
+            public void onSwipeLeft() {
+                aumentarDia(null);
+            }
+        });
     }
 
     @Override
