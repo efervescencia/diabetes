@@ -54,14 +54,14 @@ public class Diabetes2 {
 
 	public double CalcularDosis(double insulinaAyer, double hidratosAyer, double glucosaPreviaAyer, double glucosaPosteriorAyer, double totalInsulinaAyer, double glucosaActual, double hidratosActual){
 	
-		//Formulas basicas
+		//Formulas básicas
 		ratioInsulina = 1800 / totalInsulinaAyer;
 		//ratio insulina por hidratos
 		ratioInsulinaPorHidratos = (insulinaAyer / hidratosAyer);
 		double diferenciaHidratos = hidratosActual - hidratosAyer;
 		double insulina = CalcularAccion(insulinaAyer, glucosaPreviaAyer, glucosaPosteriorAyer, totalInsulinaAyer, glucosaActual); 
 		
-		//según la accion calculamos el incremento o decremento de dosis
+		//según la acción calculamos el incremento o decremento de dosis
 		
 		if (diferenciaHidratos >0){
 			//Hay que aumentar la dosis
@@ -89,9 +89,9 @@ public class Diabetes2 {
 
 		int accion = 0;
 				
-		//posibles 27 casos, reducidos a 8, 3 comprobaciones de 2 posibilidades.
+		//posibles 27 casos, reducidos a 8, 3 comprobaciones de 2 posibilidades más 2 casos extras de hiperglucemias actuales severas.
 		
-		//Segun la glucosa inicial del dia anterior
+		//Según la glucosa inicial del día anterior
 		
 		if(glucosaPreviaAyer > 140)
 		{
@@ -101,7 +101,7 @@ public class Diabetes2 {
 			accion+=1;
 		}
 		
-		//segun la glucosa posterior del dia anterior
+		//según la glucosa posterior del día anterior
 		
 		if(glucosaPosteriorAyer >180)
 				{
@@ -111,13 +111,17 @@ public class Diabetes2 {
 			accion-=1;
 		}
 		
-		// segun la glucosa actual
+		// según la glucosa actual
 		if (glucosaActual > 140){
 			accion+=1;
 		}
 		else if(glucosaActual<80){
 			accion-=1;
 			}
+			else if (glucosaActual > 220){
+			accion+=2;}
+			else if (glucosaActual > 300){
+			accion+=3;}
 		
 		return insulinaAyer + (accion / 2.0);
 	}
@@ -128,7 +132,7 @@ public class Diabetes2 {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		//comprobamos parametros
+		//comprobamos parámetros
 		if(args.length !=7){
 			System.out.println("El programa necesita 7 argumentos:\n");
 			
