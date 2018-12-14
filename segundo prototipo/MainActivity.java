@@ -1,5 +1,7 @@
 package efervescencia.es.myapplication;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -229,12 +231,19 @@ public class MainActivity extends AppCompatActivity
     public void aumentarDia(View v){
         calendarNow.add(Calendar.DAY_OF_YEAR, 1);
         actualizarFecha();
+        ObjectAnimator animatorX = ObjectAnimator.ofFloat(R.id.content2layout,"x",-1000f);
+        animatorX.setDuration(1000);
+        animatorX.start();
+
         llenarListView();
     }
 
     public void disminuirDia(View v){
         calendarNow.add(Calendar.DAY_OF_YEAR, -1);
         actualizarFecha();
+        ObjectAnimator animatorX = ObjectAnimator.ofFloat(R.id.content2layout,"x",1000f);
+        animatorX.setDuration(1000);
+        animatorX.start();
         llenarListView();
     }
 
@@ -242,7 +251,6 @@ public class MainActivity extends AppCompatActivity
     public void agregar(View v){
         Intent intent = new Intent(this, activity_agregar.class);
         intent.putExtra("fecha", fecha);
-
         intent.putExtra("hipo", hipo);
         intent.putExtra("hiper", hiper);
         intent.putExtra("hipoSevera", hipoSevera);
