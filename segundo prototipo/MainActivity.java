@@ -271,6 +271,7 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra("hiperSevera", hiperSevera);
 
         startActivity(intent);
+        overridePendingTransition(R.anim.left_in, R.anim.left_out);
     }
 
 
@@ -309,7 +310,7 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra("insulina", insulina);
         intent.putExtra("hidratos",hidratos);
         startActivity(intent);
-
+        overridePendingTransition(R.anim.left_in, R.anim.left_out);
     }
 
 }
