@@ -1,11 +1,13 @@
 package efervescencia.es.myapplication;
 
+import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,6 +21,11 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.LayoutAnimationController;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -231,20 +238,27 @@ public class MainActivity extends AppCompatActivity
     public void aumentarDia(View v){
         calendarNow.add(Calendar.DAY_OF_YEAR, 1);
         actualizarFecha();
-        ObjectAnimator animatorX = ObjectAnimator.ofFloat(R.id.content2layout,"x",-1000f);
-        animatorX.setDuration(1000);
-        animatorX.start();
-
+        animar(true);
         llenarListView();
     }
 
     public void disminuirDia(View v){
         calendarNow.add(Calendar.DAY_OF_YEAR, -1);
         actualizarFecha();
-        ObjectAnimator animatorX = ObjectAnimator.ofFloat(R.id.content2layout,"x",1000f);
-        animatorX.setDuration(1000);
-        animatorX.start();
+        animar(true);
         llenarListView();
+    }
+
+    private void animar(boolean mostrar)
+    {
+        View layout = findViewById(R.id.content2layout);
+        ObjectAnimator animatorOut = ObjectAnimator.ofFloat(layout, View.ALPHA,1.0f, 0.6f);
+        ObjectAnimator animatorIn = ObjectAnimator.ofFloat(layout, View.ALPHA,0.6f, 1.0f);
+        animatorOut.setDuration(100);
+        animatorIn.setDuration(100);
+        animatorOut.start();
+        animatorIn.start();
+
     }
 
 
