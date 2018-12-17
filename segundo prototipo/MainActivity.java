@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+
         hipo = Integer.parseInt(pref.getString("hipo","80").replaceAll("\\D+",""));
         hiper = Integer.parseInt(pref.getString("hiper","180").replaceAll("\\D+",""));
         hipoSevera = Integer.parseInt(pref.getString("hipoSevera","70").replaceAll("\\D+",""));
