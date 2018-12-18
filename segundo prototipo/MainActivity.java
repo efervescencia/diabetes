@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity
     private Calendar calendarNow = null;
     private String fecha = "";
     private SQLiteDatabase db;
-    private Bundle savedInstanceState;
     private int hipo, hiper, hipoSevera, hiperSevera;
     private Toast toast;
     private boolean DEBUG = false;
@@ -137,9 +136,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_alarm) {
-
-        } else if (id == R.id.nav_alarm) {
-
+            startActivity(new Intent(this, activity_crear_alarma.class));
+        } else if (id == R.id.nav_slideshow) {
+            startActivity(new Intent(this, activity_alarma.class));
         } else if (id == R.id.nav_share) {
 
         }
@@ -161,7 +160,7 @@ public class MainActivity extends AppCompatActivity
         String[] columns={"_id","fecha", "hora", "ingesta","glucosa_previa","glucosa_posterior", "insulina", "hidratos"};
         String[] condicion={fecha};
 
-        Cursor cursor=db.query("glucosas2", columns,"fecha=?", condicion, null ,null,null,null);
+        Cursor cursor=db.query("glucosas2", columns,"fecha=?", condicion, null ,null,"hora",null);
 
         /*---Adapta el cursor al listview
         ListView lv =(ListView) findViewById(R.id.listView);
