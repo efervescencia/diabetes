@@ -4,11 +4,13 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.icu.util.Calendar;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 public class activity_crear_alarma extends AppCompatActivity {
 
@@ -24,25 +26,33 @@ public class activity_crear_alarma extends AppCompatActivity {
     }
 
     public void ponerAlarma(View v) {
-        Context ctx = getApplicationContext();
-        alarmMgr = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(ctx, activity_alarma.class);
-        alarmIntent = PendingIntent.getBroadcast(ctx, 0, intent, 0);
+        AlarmManager alarmMgr = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, MyAlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        Calendar time = Calendar.getInstance();
+        time.setTimeInMillis(System.currentTimeMillis());
+
 
         int minutos = 0;
 
-        if (findViewById(R.id.radioButton_15_min).isSelected()) {
-            minutos = 15;
-        } else if (findViewById(R.id.radioButton_1_h).isSelected()) {
+        RadioButton r1 = (RadioButton) findViewById(R.id.radioButton_15_min);
+        RadioButton r2 = (RadioButton) findViewById(R.id.radioButton_15_min);
+        RadioButton r3 = (RadioButton) findViewById(R.id.radioButton_15_min);
+
+        if (r1.isChecked()) {
+            minutos = 1;
+        } else if (r2.isChecked()) {
             minutos = 60;
-        } else if (findViewById(R.id.radioButton_2_h).isSelected()) {
+        } else if (r3.isChecked()) {
             minutos = 120;
         }
 
         if (minutos > 0) {
-            alarmMgr.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                    SystemClock.elapsedRealtime() +
-                            minutos * 60 * 1000, alarmIntent);
+            time.add(Calendar.SECOND, 60 * minutos);
+            alarmMgr.set(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), pendingIntent);
+
+            Toast toast = Toast.makeText(getBaseContext(), "Alarma fijada", Toast.LENGTH_LONG);
+            toast.show();
 
         }
 
@@ -58,6 +68,7 @@ public class activity_crear_alarma extends AppCompatActivity {
 
 
     public void volverAPrincipal(){
+
         startActivity(new Intent(this, MainActivity.class));
     }
 
