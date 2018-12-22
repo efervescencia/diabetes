@@ -32,7 +32,6 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.Calendar;
 import java.util.Vector;
 
