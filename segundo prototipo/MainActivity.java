@@ -1,13 +1,9 @@
 package efervescencia.es.myapplication;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,15 +17,9 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.LayoutAnimationController;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.Calendar;
@@ -137,9 +127,9 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_alarm) {
             startActivity(new Intent(this, activity_crear_alarma.class));
         } else if (id == R.id.nav_slideshow) {
-            startActivity(new Intent(this, activity_alarma.class));
-        } else if (id == R.id.nav_share) {
-
+            startActivity(new Intent(this, activity_grafico.class));
+        } else if (id == R.id.nav_exit) {
+            finishAffinity();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -10,6 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class activity_alarma extends AppCompatActivity {
 
@@ -33,8 +34,7 @@ public class activity_alarma extends AppCompatActivity {
 
         final ImageView splash = (ImageView) findViewById(R.id.reloj_sonando_alarma);
         splash.startAnimation(anim);
-
-
+        
     }
 
     public void pararAlarma(View v){
