@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity
     private int hipo, hiper, hipoSevera, hiperSevera;
     private Toast toast;
     private boolean DEBUG = false;
+    private Vector<Lectura> lecturas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,7 +163,7 @@ public class MainActivity extends AppCompatActivity
         */
 
         ListView lv=(ListView) findViewById(R.id.listView);
-        Vector<Lectura> lecturas = new Vector<Lectura>();
+        lecturas = new Vector<Lectura>();
         if (cursor.moveToFirst()) {
             //Recorremos el cursor hasta que no haya más registros
             do {

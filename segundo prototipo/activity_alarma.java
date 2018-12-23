@@ -34,7 +34,7 @@ public class activity_alarma extends AppCompatActivity {
 
         final ImageView splash = (ImageView) findViewById(R.id.reloj_sonando_alarma);
         splash.startAnimation(anim);
-        
+
     }
 
     public void pararAlarma(View v){
