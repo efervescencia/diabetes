@@ -2,6 +2,8 @@ package efervescencia.es.myapplication;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -42,6 +44,10 @@ public class activity_grafico extends AppCompatActivity {
         return dataVals;
     }
 
+
+    public void volver(View v){
+        finish();
+    }
 
 
 }
