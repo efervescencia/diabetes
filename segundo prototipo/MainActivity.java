@@ -128,7 +128,9 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_alarm) {
             startActivity(new Intent(this, activity_crear_alarma.class));
         } else if (id == R.id.nav_slideshow) {
-            startActivity(new Intent(this, activity_grafico.class));
+            Intent intent = new Intent(this, activity_grafico.class);
+            intent.putExtra("fecha", fecha);
+            startActivity(intent);
         } else if (id == R.id.nav_exit) {
             finishAffinity();
         }
