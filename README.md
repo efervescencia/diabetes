@@ -14,6 +14,6 @@ Finalizada.
 
 3.- machine learning para predecir y evitar hipoglucemias.
 
-En proceso
+Finalizado.
 
 
